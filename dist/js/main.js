@@ -1,29 +1,49 @@
-const menuBtn = document.querySelector('.menu-btn');
-const menu = document.querySelector('.menu');
-const menuNav = document.querySelector('.menu-nav');
-const menuBranding = document.querySelector('.menu-branding');
-const navItems = document.querySelectorAll('.nav-item');
+(function(d) {
+    'use strict';
 
-let showMenu = false;
+    const menuBtn = d.querySelector('.menu-btn');
+    const menu = d.querySelector('.menu');
+    const menuNav = d.querySelector('.menu-nav');
+    const menuBranding = d.querySelector('.menu-branding');
+    const navItems = d.querySelectorAll('.nav-item');
 
-menuBtn.addEventListener('click', toggleMenu);
+    let showMenu = false;
+    const classes = {
+        CLOSE: 'close',
+        SHOW: 'show'
+    };
 
-function toggleMenu() {
-    if (!showMenu) {
-        menuBtn.classList.add('close');
-        menu.classList.add('show');
-        menuNav.classList.add('show');
-        menuBranding.classList.add('show');
-        navItems.forEach(item => item.classList.add('show'));
+    menuBtn.addEventListener('click', toggleMenu);
 
-        showMenu = true;
-    } else {
-        menuBtn.classList.remove('close');
-        menu.classList.remove('show');
-        menuNav.classList.remove('show');
-        menuBranding.classList.remove('show');
-        navItems.forEach(item => item.classList.remove('show'));
+    function toggleMenu() {
+        if (!showMenu) {
+            addClass(menuBtn, classes.CLOSE);
+            addClass([menu, menuNav, menuBranding], classes.SHOW);
+            navItems.forEach(item => addClass(item, classes.SHOW));
 
-        showMenu = false;
+            showMenu = true;
+        } else {
+            removeClass(menuBtn, classes.CLOSE);
+            removeClass([menu, menuNav, menuBranding], classes.SHOW);
+            navItems.forEach(item => removeClass(item, classes.SHOW));
+
+            showMenu = false;
+        }
     }
-}
+
+    function addClass(element, className) {
+        if (Array.isArray(element)) {
+            element.forEach(el => el.classList.add(className));
+        } else {
+            element.classList.add(className);
+        }
+    }
+
+    function removeClass(element, className) {
+        if (Array.isArray(element)) {
+            element.forEach(el => el.classList.remove(className));
+        } else {
+            element.classList.remove(className);
+        }
+    }
+})(document);
